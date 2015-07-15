@@ -33,11 +33,9 @@ http.listen(5250, function() {
 
     prompt.get(["alg"], function (err, result) {
 
-      console.log("Sending: " + result.alg);
-
       currentState = alg.cube.simplify(currentState + " " + result.alg);
 
-      console.log("Current State: " + currentState);
+      console.log("Current State: " + currentState.red);
 
       io.emit("alg", {type: "move", alg: result.alg});
 

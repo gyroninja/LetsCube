@@ -124,13 +124,12 @@ $(document).ready(function() {
     var algo = alg.cube.fromString(msg.alg);
     var moves = alg.cube.toMoves(algo);
     if (type === "scramble") {
-      twistyScene.setSpeed(100);
+      twistyScene.applyMoves(moves);
     }
     else if (type === "move") {
-      twistyScene.setSpeed(1);
+      twistyScene.queueMoves(moves);
+      twistyScene.play.start();
     }
-    twistyScene.queueMoves(moves);
-    twistyScene.play.start();
   });
 
   $(window).resize(twistyScene.resize);
