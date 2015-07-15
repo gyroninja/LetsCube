@@ -119,9 +119,16 @@ $(document).ready(function() {
   });
 
   socket.on("alg", function(msg) {
-    log("Recieved Alg: " + msg);
-    var algo = alg.cube.fromString(msg);
+    log("Recieved Alg: " + JSON.stringify(msg));
+    var type = msg.type;
+    var algo = alg.cube.fromString(msg.alg);
     var moves = alg.cube.toMoves(algo);
+    if (type === "scramble") {
+      twistyScene.setSpeed(100);
+    }
+    else if (type === "move") {
+      twistyScene.setSpeed(1);
+    }
     twistyScene.queueMoves(moves);
     twistyScene.play.start();
   });
