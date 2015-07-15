@@ -1,5 +1,6 @@
 var colors = require("colors");
 var express = require("express");
+var prompt = require("prompt");
 
 var app = express();
 var http = require("http").Server(app);
@@ -16,3 +17,19 @@ http.listen(5250, function() {
 
   console.log("Listening on " + "*:3000".green);
 });
+
+prompt.start();
+
+sendAlg();
+
+function sendAlg() {
+
+  prompt.get(["alg"], function (err, result) {
+
+    console.log("Sending " + result.alg);
+
+    io.emit("alg", result.alg);
+
+    sendAlg();
+  });
+}

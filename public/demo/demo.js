@@ -118,6 +118,14 @@ $(document).ready(function() {
     log(msg);
   });
 
+  socket.on("alg", function(msg) {
+    log("Recieved Alg: " + msg);
+    var algo = alg.cube.fromString(msg);
+    var moves = alg.cube.toMoves(algo);
+    twistyScene.queueMoves(moves);
+    twistyScene.play.start();
+  });
+
   $(window).resize(twistyScene.resize);
 });
 
