@@ -48,47 +48,28 @@ $(document).ready(function() {
 
   log("Document ready.");
 
-  var currentCubeSize = parseInt($("#cubeDimension").val());
   reloadCube();
 
-  $("#cubeDimension").bind("input", reDimensionCube);
-  $("#allow_dragging").bind("change", reloadCube);
   $("#hint_stickers").bind("change", reloadCube);
 
   twistyScene.setSpeed(1);
 
   $("#parsed_alg").bind("click", function() {
-    var algo = alg.cube.fromString($("#parse_alg").val());
-    var moves = alg.cube.toMoves(algo);
-    twistyScene.queueMoves(moves);
-    twistyScene.play.start();
+console.log($("#parse_alg").val());
+    socket.emit("moves", $("#parse_alg").val());
   });
 
   twistyScene.setCameraPosition(0);
-
-  function reDimensionCube() {
-    var dim = parseInt($("#cubeDimension").val());
-    if (!dim) {
-      dim = 3;
-    }
-    dim = Math.min(Math.max(dim, 1), 16);
-    if (dim != currentCubeSize) {
-      currentCubeSize = dim;
-      reloadCube();
-    }
-  }
-
   // From alg.garron.us
   function escapeAlg(algstr){return algstr.replace(/\n/g, '%0A').replace(/-/g, '%2D').replace(/\'/g, '-').replace(/ /g, '_');}
 
   function reloadCube() {
-    log("Current cube size: " + currentCubeSize);
 
     var renderer = THREE["WebGLRenderer"]; //TODO: Unsafe
 
     twistyScene = new twisty.scene({
       renderer: renderer,
-      allowDragging: $("#allow_dragging").is(':checked'),
+      allowDragging: true,
       speed: 1,
       stats: true
     });
@@ -97,14 +78,13 @@ $(document).ready(function() {
 
     twistyScene.initializePuzzle({
       "type": "cube",
-      "dimension": currentCubeSize,
+      "dimension": 3,
       "stage": "Full",
       "doubleSided": "true",
       "cubies": "true",
       "hintStickers": $("#hint_stickers").is(':checked'),
       "stickerBorder": "true"
     });
-    $("#cubeDimension").blur(); 
     twistyScene.resize();
   }
 

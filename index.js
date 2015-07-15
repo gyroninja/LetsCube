@@ -17,8 +17,22 @@ app.use(express.static(__dirname + "/public"));
 io.on("connection", function(socket) {
 
   socket.emit("message", "Hello World!");
-
   socket.emit("alg", {type: "scramble", alg: currentState});
+
+  socket.on("moves", function(msg) {
+
+    try {
+
+      alg.cube.fromString(msg); //Validate input here
+
+      sendAlg(msg);
+    }
+
+    catch (err) {
+
+      // Bad Input
+    }
+  })
 });
 
 http.listen(5250, function() {
@@ -27,20 +41,24 @@ http.listen(5250, function() {
 
   prompt.start();
 
-  sendAlg();
-
-  function sendAlg() {
-
-    prompt.get(["alg"], function (err, result) {
-
-      currentState = alg.cube.simplify(currentState + " " + result.alg);
-
-      console.log("Current State: " + currentState.red);
-
-      io.emit("alg", {type: "move", alg: result.alg});
-
-      sendAlg();
-    });
-  }
+  getAlg();
 });
 
+function getAlg() {
+
+  prompt.get(["alg"], function (err, result) {
+
+    sendAlg(result.alg);
+
+    getAlg();
+  });
+}
+
+function sendAlg(algo) {
+console.log(algo);
+  currentState = alg.cube.simplify(currentState + " " + algo);
+
+  console.log("Current State: " + currentState.red);
+
+  io.emit("alg", {type: "move", alg: algo});
+}
