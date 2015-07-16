@@ -1,0 +1,32 @@
+{
+  "name": "LetsCube",
+  "version": "1.0.0",
+  "description": "Cube with friends",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.13.1",
+    "scrambo": "^0.1.0",
+    "prompt": "^0.2.14",
+    "colors": "^1.1.2",
+    "alg": "^0.2.0",
+    "socket.io": "^1.3.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gyroninja/LetsCube.git"
+  },
+  "keywords": [
+    "cubing",
+    "multiplayer"
+  ],
+  "author": "gyroninja",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gyroninja/LetsCube/issues"
+  },
+  "homepage": "https://github.com/gyroninja/LetsCube"
+}
