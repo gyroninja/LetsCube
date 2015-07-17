@@ -8,7 +8,7 @@ var app = express();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
 
-console.log(scrambo.get(1).toString());
+var port = 5250;
 
 var currentState = scrambo.get(1).toString();
 
@@ -35,9 +35,9 @@ io.on("connection", function(socket) {
   })
 });
 
-http.listen(5250, function() {
+http.listen(port, function() {
 
-  console.log("Listening on " + "*:3000".green);
+  console.log("Listening on " + ("*:" + port).green);
 
   prompt.start();
 
@@ -55,7 +55,7 @@ function getAlg() {
 }
 
 function sendAlg(algo) {
-console.log(algo);
+
   currentState = alg.cube.simplify(currentState + " " + algo);
 
   console.log("Current State: " + currentState.red);
